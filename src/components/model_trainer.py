@@ -1,5 +1,6 @@
+import os
 from sklearn.ensemble import RandomForestClassifier
-import json
+import joblib
 
 def train_random_forest(df):
     # Split
@@ -15,6 +16,9 @@ def train_random_forest(df):
     model = RandomForestClassifier(n_estimators=100, max_depth=5, random_state=42)
     model.fit(X_train, y_train)
     
-    # Evaluate
+    os.makedirs('models', exist_ok=True)
+    joblib.dump(model, 'models/nifty50_rf_model.pkl')
+    print("✔MOdel successfully saved to models/nifty50_rf_model.pkl")
+
     accuracy = model.score(X_test, y_test)
     return model, accuracy
